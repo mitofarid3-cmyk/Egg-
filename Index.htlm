@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Egg Rewards — Démo</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            color: white;
+            background:
+                radial-gradient(circle at top, #3b176d 0%, transparent 40%),
+                linear-gradient(135deg, #10051f, #190b32 50%, #08030f);
+        }
+
+        header {
+            padding: 22px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,.12);
+            background: rgba(0,0,0,.25);
+            backdrop-filter: blur(10px);
+        }
+
+        header h1 {
+            font-size: 32px;
+            color: #ffffff;
+        }
+
+        header p {
+            margin-top: 7px;
+            color: #bcaed0;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 950px;
+            margin: 40px auto;
+        }
+
+        .notice {
+            background: rgba(255, 193, 7, .12);
+            border: 1px solid rgba(255, 193, 7, .35);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 25px;
+            color: #ffe8a3;
+            text-align: center;
+        }
+
+        .card {
+            background: rgba(255,255,255,.07);
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 22px;
+            padding: 28px;
+            box-shadow: 0 15px 50px rgba(0,0,0,.35);
+            backdrop-filter: blur(12px);
+        }
+
+        .card h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .input-area {
+            display: flex;
+            gap: 10px;
+        }
+
+        input {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            outline: none;
+            border-radius: 12px;
+            background: #130b20;
+            color: white;
+            border: 1px solid #38254c;
+            font-size: 16px;
+        }
+
+        button {
+            border: none;
+            cursor: pointer;
+            border-radius: 12px;
+            padding: 14px 20px;
+            font-size: 15px;
+            font-weight: bold;
+            transition: .2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.12);
+        }
+
+        .search-btn {
+            background: #8b5cf6;
+            color: white;
+        }
+
+        .eggs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 18px;
+            margin-top: 30px;
+        }
+
+        .egg {
+            background: rgba(0,0,0,.22);
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 18px;
+            padding: 22px;
+            text-align: center;
+            transition: .25s;
+        }
+
+        .egg:hover {
+            transform: translateY(-5px);
+            border-color: #8b5cf6;
+        }
+
+        .egg-icon {
+            font-size: 65px;
+            margin-bottom: 12px;
+        }
+
+        .egg h3 {
+            margin-bottom: 8px;
+        }
+
+        .egg p {
+            color: #aaa0b8;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .select-btn {
+            width: 100%;
+            background: #22c55e;
+            color: white;
+        }
+
+        .selected {
+            border: 2px solid #22c55e;
+            box-shadow: 0 0 20px rgba(34,197,94,.2);
+        }
+
+        #result {
+            display: none;
+            margin-top: 25px;
+            text-align: center;
+            background: rgba(34,197,94,.1);
+            border: 1px solid rgba(34,197,94,.35);
+            border-radius: 18px;
+            padding: 25px;
+        }
+
+        #result .big {
+            font-size: 55px;
+            margin-bottom: 10px;
+        }
+
+        .claim {
+            margin-top: 18px;
+            background: #8b5cf6;
+            color: white;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #81758d;
+            font-size: 13px;
+        }
+
+        @media (max-width: 600px) {
+            .input-area {
+                flex-direction: column;
+            }
+
+            .search-btn {
+                width: 100%;
+            }
+
+            header h1 {
+                font-size: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>🥚 Egg Rewards</h1>
+    <p>Démo non officielle</p>
+</header>
+
+<main class="container">
+
+    <div class="notice">
+        ⚠️ Ceci est une démonstration indépendante.
+        Aucun compte Roblox, mot de passe ou téléchargement n'est demandé.
+    </div>
+
+    <section class="card">
+
+        <h2>Choisis ton pseudo</h2>
+
+        <div class="input-area">
+            <input
+                id="username"
+                type="text"
+                maxlength="20"
+                placeholder="Entre ton pseudo..."
+            >
+
+            <button class="search-btn" onclick="searchUser()">
+                Continuer
+            </button>
+        </div>
+
+        <div id="userMessage"></div>
+
+        <div class="eggs">
+
+            <div class="egg" data-name="Golden Egg">
+                <div class="egg-icon">🥚</div>
+                <h3>Golden Egg</h3>
+                <p>Œuf doré — objet de démonstration</p>
+
+                <button class="select-btn" onclick="selectEgg(this, 'Golden Egg', '🥚')">
+                    Choisir
+                </button>
+            </div>
+
+            <div class="egg" data-name="Diamond Egg">
+                <div class="egg-icon">💎</div>
+                <h3>Diamond Egg</h3>
+                <p>Œuf diamant — objet de démonstration</p>
+
+                <button class="select-btn" onclick="selectEgg(this, 'Diamond Egg', '💎')">
+                    Choisir
+                </button>
+            </div>
+
+            <div class="egg" data-name="Rainbow Egg">
+                <div class="egg-icon">🌈</div>
+                <h3>Rainbow Egg</h3>
+                <p>Œuf arc-en-ciel — objet de démonstration</p>
+
+                <button class="select-btn" onclick="selectEgg(this, 'Rainbow Egg', '🌈')">
+                    Choisir
+                </button>
+            </div>
+
+            <div class="egg" data-name="Mystery Egg">
+                <div class="egg-icon">❓</div>
+                <h3>Mystery Egg</h3>
+                <p>Œuf mystère — objet de démonstration</p>
+
+                <button class="select-btn" onclick="selectEgg(this, 'Mystery Egg', '❓')">
+                    Choisir
+                </button>
+            </div>
+
+        </div>
+
+        <div id="result">
+            <div class="big" id="resultIcon">🥚</div>
+
+            <h2 id="resultTitle">Golden Egg</h2>
+
+            <p id="resultText"></p>
+
+            <button class="claim" onclick="claimReward()">
+                🎁 Valider la sélection
+            </button>
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+    Egg Rewards © 2026 — Projet de démonstration indépendant
+</footer>
+
+<script>
+    let currentUser = "";
+    let selectedEgg = "";
+
+    function searchUser() {
+
+        const input = document.getElementById("username");
+        const message = document.getElementById("userMessage");
+
+        const username = input.value.trim();
+
+        if (username.length < 3) {
+            message.innerHTML = `
+                <p style="
+                    margin-top:15px;
+                    color:#ff8080;
+                    text-align:center;
+                ">
+                    Entre un pseudo d'au moins 3 caractères.
+                </p>
+            `;
+            return;
+        }
+
+        currentUser = username;
+
+        message.innerHTML = `
+            <p style="
+                margin-top:15px;
+                color:#7ee2a8;
+                text-align:center;
+            ">
+                ✓ Pseudo enregistré : <strong>${escapeHTML(username)}</strong>
+            </p>
+        `;
+    }
+
+
+    function selectEgg(button, eggName, icon) {
+
+        if (!currentUser) {
+            alert("Entre d'abord ton pseudo.");
+            return;
+        }
+
+        document.querySelectorAll(".egg").forEach(card => {
+            card.classList.remove("selected");
+        });
+
+        button.parentElement.classList.add("selected");
+
+        selectedEgg = eggName;
+
+        document.getElementById("resultIcon").textContent = icon;
+        document.getElementById("resultTitle").textContent = eggName;
+
+        document.getElementById("resultText").innerHTML =
+            `Sélection enregistrée pour <strong>${escapeHTML(currentUser)}</strong>.<br>
+            <small>Il s'agit uniquement d'une démonstration : aucun objet Roblox réel n'est envoyé.</small>`;
+
+        document.getElementById("result").style.display = "block";
+
+        document.getElementById("result").scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+    }
+
+
+    function claimReward() {
+
+        if (!currentUser || !selectedEgg) {
+            alert("Sélectionne un œuf.");
+            return;
+        }
+
+        alert(
+            "Démo terminée !\n\n" +
+            "Pseudo : " + currentUser + "\n" +
+            "Sélection : " + selectedEgg + "\n\n" +
+            "Aucune récompense Roblox réelle n'a été envoyée."
+        );
+    }
+
+
+    function escapeHTML(text) {
+        const div = document.createElement("div");
+        div.textContent = text;
+        return div.innerHTML;
+    }
+</script>
+
+</body>
+</html>
